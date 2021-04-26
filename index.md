@@ -1,0 +1,126 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+#gif-wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #000;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: -1;
+}
+
+#gif-logo {
+  position: fixed;
+  top: 0.5rem;
+  right: 0.5rem;
+  border-radius: 30px;
+  padding: 0 1rem;
+  background: #000;
+}
+#gif-logo img {
+  max-width: 150px;
+}
+
+#new-gif {
+  padding: 0.75rem 2.5rem;
+  font-weight: 600;
+  background: #424242;
+  z-index: 10;
+  color: #fff;
+  border-radius: 30px;
+  border: 0;
+  font-size: 14px;
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+#new-gif:hover {
+  background: #626262;
+}
+    </style>
+
+</head>
+<body>
+    <div id="gif-wrap"></div>
+<!-- <div id="gif-logo"><img src="https://storage.googleapis.com/chydlx/codepen/random-gif-generator/giphy-logo.gif"/></div>
+<button id="new-gif">New Gif</button> -->
+    <script >
+        $(document).ready(function () {
+	// Initiate gifLoop for set interval
+	var refresh;
+	// Duration count in seconds
+	const duration = 1000 * 10;
+	// Giphy API defaults
+	const giphy = {
+		baseURL: "https://api.giphy.com/v1/gifs/",
+		apiKey: "0UTRbFtkMxAplrohufYco5IY74U8hOes",
+		tag: "sad",
+		type: "random",
+		rating: "PG-13"
+	};
+	// Target gif-wrap container
+	const $gif_wrap = $("#gif-wrap");
+	// Giphy API URL
+	let giphyURL = encodeURI(
+		giphy.baseURL +
+			giphy.type +
+			"?api_key=" +
+			giphy.apiKey +
+			"&tag=" +
+			giphy.tag +
+			"&rating=" +
+			giphy.rating
+	);
+
+	// Call Giphy API and render data
+	var newGif = () => $.getJSON(giphyURL, (json) => renderGif(json.data));
+
+	// Display Gif in gif wrap container
+	var renderGif = (_giphy) => {
+		console.log(_giphy);
+		// Set gif as bg image
+		$gif_wrap.css({
+			"background-image": 'url("' + _giphy.image_original_url + '")'
+		});
+
+		// Start duration countdown
+		// refreshRate();
+	};
+
+	// Call for new gif after duration
+	// var refreshRate = () => {
+	// 	// Reset set intervals
+	// 	clearInterval(refresh);
+	// 	refresh = setInterval(function() {
+	// 		// Call Giphy API for new gif
+	// 		newGif();
+	// 	}, duration);
+	// };
+
+	// Call Giphy API for new gif
+	newGif();
+
+	const newGifButton = $("#new-gif");
+
+	newGifButton.click(newGif);
+});
+
+
+        </script>
+</body>
+<!-- <link rel="stylesheet" href="/css.css"> -->
+
