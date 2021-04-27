@@ -55,9 +55,14 @@
 
 </head>
 <body>
-    <div id="gif-wrap"></div>
+    <!-- <div id="gif-wrap"></div> -->
 <!-- <div id="gif-logo"><img src="https://storage.googleapis.com/chydlx/codepen/random-gif-generator/giphy-logo.gif"/></div>
 <button id="new-gif">New Gif</button> -->
+
+<img alt="Badge Photo" class="img-circle" src="empty.jpg" title="crakesh" />
+
+
+
     <script >
         $(document).ready(function () {
 	// Initiate gifLoop for set interval
@@ -88,10 +93,18 @@
 
 	// Call Giphy API and render data
 	var newGif = () => $.getJSON(giphyURL, (json) => renderGif(json.data));
+	
+
 
 	// Display Gif in gif wrap container
 	var renderGif = (_giphy) => {
 		console.log(_giphy);
+		
+
+		//stack overflow example
+var imgsrc = _giphy.image_original_url
+  document.querySelector('.img-circle').setAttribute('src', imgsrc);
+		
 		// Set gif as bg image
 		$gif_wrap.css({
 			"background-image": 'url("' + _giphy.image_original_url + '")'
@@ -100,6 +113,8 @@
 		// Start duration countdown
 		// refreshRate();
 	};
+
+	
 
 	// Call for new gif after duration
 	// var refreshRate = () => {
@@ -114,10 +129,12 @@
 	// Call Giphy API for new gif
 	newGif();
 
+	
 	const newGifButton = $("#new-gif");
-
+	
 	newGifButton.click(newGif);
 });
+
 
 
         </script>
